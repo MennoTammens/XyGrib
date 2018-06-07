@@ -36,8 +36,7 @@ else {
 }
 }
 
-LIBS += -lbz2 -lz -lproj -lnova -Lqwt-6.1.3/lib/ -lqwt
-LIBS +=  -Lg2clib -lg2c -lpng -ljasper  # respect order!
+LIBS += -lbz2 -lz -lproj -lnova -lgrib2c -Lqwt-6.1.3/lib/ -lqwt
 
 # ----------------------------------------------------
 CFLAGS += -std=c99 

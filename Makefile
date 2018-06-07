@@ -43,7 +43,6 @@ XyGrib: $(SRC)
 	@ echo
 	rm -f ./XyGrib
 	cd $(QWTDIR)/src; $(QMAKE); make -j6
-	cd src/g2clib; make
 	cd src; $(QMAKE); make -j6
 	@ echo "-----------------------------------"
 	@ echo "#!/bin/bash" >> ./XyGrib
