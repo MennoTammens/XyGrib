@@ -357,6 +357,18 @@ void  GribRecord::translateDataType ()
     {
         dataCenterModel = ECMWF_WAVE;
     }
+    //------------------------
+    // KNMI
+    //------------------------
+    else if (idCenter==99)
+    {
+        if (idModel==8 && idGrid==255) {	// HIRLAM
+            dataCenterModel = KNMI_HIRLAM;
+        }
+        else if (idModel==201 && idGrid==255) {	// HARMONIE
+            dataCenterModel = KNMI_HARMONIE;
+        }
+    }
 	//------------------------------------------
 	// Others recognized grib suppliers
 	//------------------------------------------

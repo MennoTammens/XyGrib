@@ -64,6 +64,10 @@ QString DataCodeStr::toString (const DataCenterModel &dcm)
             return "Arpege";
         case MF_AROME :
             return "Arome";
+        case KNMI_HIRLAM:
+            return "KNMI HIRLAM";
+        case KNMI_HARMONIE:
+            return "KNMI HARMONIE";
         case OTHER_DATA_CENTER :
 		default:
 			return "";
