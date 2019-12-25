@@ -330,7 +330,12 @@ void GribReader::readAllGribRecords (int nbrecs)
             || (rec->getDataType()==GRB_CIN
 					&& rec->getLevelType()==LV_GND_SURF && rec->getLevelValue()==0)
 			|| (rec->getDataType()==GRB_WIND_GUST
-					&& rec->getLevelType()==LV_GND_SURF && rec->getLevelValue()==0)
+					&& (   (rec->getLevelType()==LV_GND_SURF && rec->getLevelValue()==0)
+					    || (rec->getLevelType()==LV_ABOV_GND && rec->getLevelValue()==10) ) )
+			|| (rec->getDataType()==GRB_WIND_GUST_VX
+					&& rec->getLevelType()==LV_ABOV_GND && rec->getLevelValue()==10)
+			|| (rec->getDataType()==GRB_WIND_GUST_VY
+					&& rec->getLevelType()==LV_ABOV_GND && rec->getLevelValue()==10)
 			//-----------------------------------------
             || (rec->getDataType()==GRB_WTMP
                             && rec->getLevelType()==LV_GND_SURF && rec->getLevelValue()==0)
@@ -964,6 +969,7 @@ void GribReader::openFilePriv (const QString& fname, int nbrecs)
     if (nbrecs > 0) {
 		emit newMessage (LongTaskMessage::LTASK_PREPARE_MAPS);
 		readGribFileContent (nbrecs);
+		analyseRecords ();
 		// should be done once after opening all files.
 		computeAccumulationRecords ();
 	}
@@ -1087,4 +1093,45 @@ time_t  GribReader::getRefDateForDataCenter (const DataCenterModel &dcm)
 		
 	}
 	return t;
+}
+
+void GribReader::analyseRecords ()
+{
+    // Make a speed wind gust record from a vx and a vy records
+    // TODO : display also gust direction
+    Altitude alt (LV_ABOV_GND, 10);
+    if (hasData(DataCode(GRB_WIND_GUST, alt)))
+        return;
+
+    DataCode dtcx (GRB_WIND_GUST_VX, alt);
+    DataCode dtcy (GRB_WIND_GUST_VY, alt);
+    if (!hasData(dtcx) || !hasData(dtcy))
+        return;
+
+    for (long date : setAllDates)
+    {
+        GribRecord *recx = getRecord (dtcx, date);
+        GribRecord *recy = getRecord (dtcy, date);
+        if (recx && recy) {
+            GribRecord *recGust = new GribRecord (*recx);
+            // compatibility with NOAA : gust is given at the surface
+            recGust->setDataCode (DataCode(GRB_WIND_GUST,LV_GND_SURF,0));
+            for (int i=0; i<recx->getNi(); i++)
+            {
+                for (int j=0; j<recx->getNj(); j++)
+                {
+                    double vx = recx->getValue(i,j);
+                    double vy = recy->getValue(i,j);
+                    if (GribDataIsDef(vx) && GribDataIsDef(vy)) {
+                        //DBG("%d %d : %g %g : %g", i,j, vx,vy, sqrt(vx*vx+vy*vy));
+                        recGust->setValue (i, j, sqrt(vx*vx+vy*vy));
+                    }
+                    else
+                        recGust->setValue(i, j, GRIB_NOTDEF);
+                }
+            }
+            storeRecordInMap (recGust);
+            //recGust->print("recGust");
+        }
+    }
 }

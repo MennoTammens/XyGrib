@@ -126,6 +126,8 @@ class GribReader : public RegularGridReader, public LongTaskMessage
 		// Détermine les GribRecord qui encadrent une date
 		void 	findGribsAroundDate (DataCode dtc, time_t date,
 									GribRecord **before, GribRecord **after);
+
+		void analyseRecords();
 };
 
 

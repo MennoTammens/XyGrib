@@ -70,6 +70,10 @@ QString DataCodeStr::toString (const DataCenterModel &dcm)
             return "Arome";
         case NMC :
             return "Belgium NMC";
+        case KNMI_HIRLAM :
+            return "KNMI HIRLAM";
+        case KNMI_HARMONIE_AROME :
+            return "KNMI HARMONIE-AROME";
         case OTHER_DATA_CENTER :
 		default:
 			return "";

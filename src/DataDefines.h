@@ -58,6 +58,8 @@ enum DataCenterModel {
     ECMWF_WAVE,
     ECMWF_ERA5,
     NMC,
+    KNMI_HIRLAM,
+    KNMI_HARMONIE_AROME,
 	OTHER_DATA_CENTER
 };
 //--------------------------------------------------------
