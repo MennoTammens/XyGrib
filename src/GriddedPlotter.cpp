@@ -264,8 +264,11 @@ void GriddedPlotter::drawWindArrowWithBarbs_static (
     
     if (vkn < 1)
     {
-        int r = 5;     // vent très faible, dessine un cercle
-        pnt.drawEllipse(i-r,j-r,2*r,2*r);
+//        int r = 5;     // vent très faible, dessine un cercle
+//        pnt.drawEllipse(i-r,j-r,2*r,2*r);
+        QPixmap *mosquito = new QPixmap(mosquito_xpm);
+        pnt.drawPixmap(i-10, j-10, *mosquito);
+        delete mosquito;
     }
     else {
         // Flèche centrée sur l'origine
