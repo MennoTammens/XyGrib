@@ -231,7 +231,8 @@ class GriddedPlotter :
         			QPainter &pnt, int i, int j,
         			double vx, double vy,
         			bool south,
-        			const QColor& arrowColor=Qt::white);
+        			const QColor& arrowColor=Qt::white,
+        			bool mosquitoParadise = false);
 		
 		static void drawWindArrowWithBarbs_static (
         			QPainter &pnt, int i, int j,
@@ -239,7 +240,8 @@ class GriddedPlotter :
         			bool south,
         			const QColor& arrowColor,
 					int  windBarbuleSize,
-					bool thinWindArrows
+					bool thinWindArrows,
+					bool mosquitoParadise = false
   				);
 		
 		// Called from MeteoTable

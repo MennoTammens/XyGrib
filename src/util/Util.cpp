@@ -861,3 +861,11 @@ QString Util::pathData()
     return GLOB_AppDataDir + "/";
 }
 
+bool Util::isMosquitoParadise(double lat, double lon) {
+    return (
+            lat > 52.16719532005 &&
+            lat < 52.73504521013 + (lon - 4.66094833374) * 0.5204426966456787 &&
+            lon > 4.66094833374 &&
+            lon < 5.88455062866
+    );
+}

@@ -222,7 +222,8 @@ void GriddedPlotter::drawWindArrowWithBarbs (
 			QPainter &pnt,
 			int i, int j, double vx, double vy,
 			bool south,
-			const QColor& arrowColor
+			const QColor& arrowColor,
+			bool mosquitoParadise
 	)
 {
     GriddedPlotter::drawWindArrowWithBarbs_static (
@@ -231,7 +232,8 @@ void GriddedPlotter::drawWindArrowWithBarbs (
 					south,
         			arrowColor,
 					this->windBarbuleSize,
-					this->thinWindArrows);
+					this->thinWindArrows,
+					mosquitoParadise);
 }
 //-----------------------------------------------------------------------------
 void GriddedPlotter::drawWindArrowWithBarbs_static (
@@ -240,7 +242,8 @@ void GriddedPlotter::drawWindArrowWithBarbs_static (
 					bool south,
         			const QColor& arrowColor,
 					int  windBarbuleSize,
-					bool thinWindArrows
+					bool thinWindArrows,
+					bool mosquitoParadise
 	)
 {
 	if (! GribDataIsDef(vx) || ! GribDataIsDef(vy))
@@ -264,11 +267,14 @@ void GriddedPlotter::drawWindArrowWithBarbs_static (
     
     if (vkn < 1)
     {
-//        int r = 5;     // vent très faible, dessine un cercle
-//        pnt.drawEllipse(i-r,j-r,2*r,2*r);
-        QPixmap *mosquito = new QPixmap(mosquito_xpm);
-        pnt.drawPixmap(i-10, j-10, *mosquito);
-        delete mosquito;
+        if(mosquitoParadise) {
+            QPixmap *mosquito = new QPixmap(mosquito_xpm);
+            pnt.drawPixmap(i-10, j-10, *mosquito);
+            delete mosquito;
+        } else {
+            int r = 5;     // vent très faible, dessine un cercle
+            pnt.drawEllipse(i-r,j-r,2*r,2*r);
+        }
     }
     else {
         // Flèche centrée sur l'origine

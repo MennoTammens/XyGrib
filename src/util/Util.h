@@ -156,6 +156,8 @@ class Util : public QObject
     static float  msToBeaufort_F (float v);
     static float  BeaufortToMs_F (float bf);	
 
+    static bool   isMosquitoParadise (double lat, double lon);
+
     static double distancePointSegment (double a,double b,     // point
 								  double x0, double y0,  // segment start
 								  double x1, double y1   // segment end

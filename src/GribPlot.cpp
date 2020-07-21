@@ -226,7 +226,7 @@ void GribPlot::draw_WIND_Arrows (
                     vy = -co;
             	}
                 if (barbules)
-                    drawWindArrowWithBarbs(pnt, i,j, vx,vy, (lat<0), arrowsColor);
+                    drawWindArrowWithBarbs(pnt, i,j, vx,vy, (lat<0), arrowsColor, Util::isMosquitoParadise(lat, lon));
                 else
                     drawWindArrow(pnt, i,j, vx,vy);
 			}
