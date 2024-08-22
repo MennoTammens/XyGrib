@@ -47,7 +47,7 @@ jobs:
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
     - name: Install dependencies
-      run: apt install libz-dev libbz2-dev libproj-dev  qtbase5-dev qttools5-dev libqt5svg5-dev libg2c-dev libopenjp2-7-dev libnova-dev libpng-dev
+      run: sudo apt-get update && sudo apt-get install libz-dev libbz2-dev libproj-dev  qtbase5-dev qttools5-dev libqt5svg5-dev libg2c-dev libopenjp2-7-dev libnova-dev libpng-dev
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
